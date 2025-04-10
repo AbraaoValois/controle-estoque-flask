@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Relatório de Compras Fiado em Aberto</h2>
+
+<table class="table table-bordered table-hover mt-4">
+    <thead class="table-dark">
+        <tr>
+            <th>Cliente</th>
+            <th>Descrição</th>
+            <th>Valor (R$)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in fiados %}
+        <tr>
+            <td>{{ purchase.client.name }}</td>
+            <td>{{ purchase.description }}</td>
+            <td>{{ '%.2f' | format(purchase.value) }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">Nenhuma compra fiado em aberto.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Controle de Estoque</h2>
+
+  <a href="{{ url_for('product.novo_produto') }}" class="btn btn-primary mb-3">+ Novo Produto</a>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'message' else category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Preço (R$)</th>
+          <th>Movimentar</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td>{{ produto.name }}</td>
+          <td>{{ produto.quantity }}</td>
+          <td>R$ {{ '%.2f'|format(produto.unit_price) }}</td>
+          <td>
+            <form action="{{ url_for('product.movimentar_produto', produto_id=produto.id) }}" method="post" class="d-flex flex-column flex-sm-row gap-1">
+              <select name="movimento" class="form-select form-select-sm" required>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+              </select>
+              <input type="number" name="quantidade" min="1" class="form-control form-control-sm" placeholder="Qtd" required>
+              <button type="submit" class="btn btn-sm btn-success">OK</button>
+            </form>
+          </td>
+          <td>
+            <form action="{{ url_for('product.deletar_produto', produto_id=produto.id) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este produto?');">
+              <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="text-center">Nenhum produto cadastrado no estoque.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

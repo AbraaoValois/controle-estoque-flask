@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ client.name }}</h2>
+<p>Telefone: {{ client.phone }}</p>
+
+<h4 class="mt-4">Compras Fiado</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Valor (R$)</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in client.purchases %}
+        <tr>
+            <td>{{ purchase.description }}</td>
+            <td>{{ '%.2f' | format(purchase.value) }}</td>
+            <td>
+                {% if purchase.is_paid %}
+                    Pago
+                {% else %}
+                    Em aberto
+                {% endif %}
+            </td>
+            <td>
+                {% if not purchase.is_paid %}
+                <a href="{{ url_for('client.pay_purchase', purchase_id=purchase.id) }}" class="btn btn-sm btn-success">Marcar como Paga</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">Nenhuma compra registrada.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('client.add_purchase', client_id=client.id) }}" class="btn btn-primary">Adicionar Compra</a>
+{% endblock %}

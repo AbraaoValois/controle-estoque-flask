@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Novo Produto</h2>
+
+  <a href="{{ url_for('product.estoque') }}" class="btn btn-secondary mb-3">← Voltar ao Estoque</a>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'message' else category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('product.novo_produto') }}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nome do Produto</label>
+      <input type="text" name="name" id="name" class="form-control" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantidade</label>
+      <input type="number" name="quantity" id="quantity" class="form-control" min="1" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="unit_price" class="form-label">Preço Unitário (R$)</label>
+      <input type="number" name="unit_price" id="unit_price" class="form-control" step="0.01" min="0" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+  </form>
+</div>
+{% endblock %}

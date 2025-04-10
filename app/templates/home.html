@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5">Olá, {{ current_user.username }} 👋</h1>
+            <p class="lead">Bem-vindo à <strong>Adega da Neusa</strong>! <br>
+            Sistema de controle de fiado e vendas.</p>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">Sair</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a href="{{ url_for('client.clients') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-white bg-primary card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title">Clientes</h5>
+                        <p class="card-text fs-4">{{ total_clients }} Cadastrados</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="{{ url_for('client.clients') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-white bg-success card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title">Vendas</h5>
+                        <p class="card-text fs-4">{{ total_purchases }} Registradas</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="{{ url_for('client.fiado_report') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-white bg-danger card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title">Fiado</h5>
+                        <p class="card-text fs-4">R$ {{ "%.2f"|format(total_fiado) }} Pendentes</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Nova linha com card Estoque -->
+    <div class="row g-4 mt-3">
+        <div class="col-md-4">
+            <a href="{{ url_for('product.estoque') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-white bg-warning card-hover">
+                    <div class="card-body">
+                        <h5 class="card-title">Estoque</h5>
+                        <p class="card-text fs-4">Ver Produtos</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-5 text-center">
+        <a href="{{ url_for('client.new_client') }}" class="btn btn-lg btn-primary">Nova Venda</a>
+        <a href="{{ url_for('client.fiado_report') }}" class="btn btn-lg btn-danger">Ver Fiados</a>
+        <a href="{{ url_for('product.estoque') }}" class="btn btn-lg btn-warning text-white">Ver Estoque</a>
+    </div>
+</div>
+
+<style>
+    .card-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+    .card-hover:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}

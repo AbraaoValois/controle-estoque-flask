@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Nova compra fiada para {{ client.name }}</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Descrição:</label>
+        <input type="text" name="description" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Valor (R$):</label>
+        <input type="number" name="value" step="0.01" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+</form>
+
+<a href="{{ url_for('client.client_detail', client_id=client.id) }}" class="btn btn-secondary mt-3">Voltar</a>
+{% endblock %}

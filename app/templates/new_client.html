@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Cadastro de Cliente</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome do Cliente</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Telefone</label>
+            <input type="text" class="form-control" name="phone">
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{{ url_for('main.home') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
